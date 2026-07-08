@@ -5,17 +5,8 @@ const dataSource = new ProductData('tents');
 
 // Retrieves the existing cart array, checks for duplicates, and updates local storage
 function addProductToCart(product) {
-  const currentCart = getLocalStorage('so-cart') || [];
-  const existingItem = currentCart.find(item => item.Id === product.Id);
-
-  if (existingItem) {
-    existingItem.Quantity = (existingItem.Quantity || 1) + 1;
-  } else {
-    product.Quantity = 1;
-    currentCart.push(product);
-  }
-
-  setLocalStorage('so-cart', currentCart);
+  const cartItems = getLocalStorage("so-cart") || [];
+  setLocalStorage("so-cart", cartItems);
 }
 
 // add to cart button event handler
