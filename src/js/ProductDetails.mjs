@@ -3,59 +3,70 @@ import { setLocalStorage, getLocalStorage } from './utils.mjs';
 export default class ProductDetails {
   constructor(productId, dataSource) {
     this.productId = productId;
-    this.product = {};
     this.dataSource = dataSource;
+    this.product = {}; // Will hold the product object once fetched
   }
 
-  // Initializes the details page by fetching data and setting up listeners
+  /**
+   * Initializes the product details page by fetching data,
+   * rendering the HTML, and attaching the cart event listener.
+   */
   async init() {
-    // 1. Use the data source to find the specific product details
+    // 1. Use the datasource to get the details for the current product.
     this.product = await this.dataSource.findProductById(this.productId);
-    
-    // 2. Render the details to the HTML page
-    this.renderProductDetails('main');
 
-    // 3. Listen for the click on the Add to Cart button
+    // 2. Render the HTML details onto the page
+    this.renderProductDetails('main.product-detail');
+
+    // 3. Add a listener to the Add to Cart button using .bind(this)
+    // so 'this' inside addToCart refers to this class instance.
     document
       .getElementById('addToCart')
-      .addEventListener('click', this.addProductToCart.bind(this));
+      .addEventListener('click', this.addToCart.bind(this));
   }
 
-  // Adds the current product to local storage cart
-  addProductToCart() {
+  /**
+   * Adds the currently viewed product to the localStorage cart.
+   */
+  addToCart() {
+    // Retrieve existing cart or initialize an empty array if it doesn't exist
     const cartItems = getLocalStorage('so-cart') || [];
-    cartItems.push(this.product); // Adds the current product object to the array
+    
+    // Add the current product object to the array
+    cartItems.push(this.product);
+    
+    // Save the updated array back to localStorage
     setLocalStorage('so-cart', cartItems);
+    
+    // Optional: Add a visual indicator that the item was added
+    alert(`${this.product.NameWithoutBrand} added to cart!`);
   }
 
-  // Generates and inserts the HTML template dynamically
+  /**
+   * Generates the HTML structure for the product details and injects it into the DOM.
+   * @param {string} selector - The CSS selector of the container element (e.g., 'main.product-detail')
+   */
   renderProductDetails(selector) {
     const element = document.querySelector(selector);
-    
-    // Check if element and product exist before modifying innerHTML
-    if (element && this.product) {
-      element.innerHTML = this.productDetailsTemplate(this.product);
-    }
-  }
+    if (!element) return;
 
-  // HTML Template helper method
-  productDetailsTemplate(product) {
-    return `<section class="product-detail">
-      <h3>${product.Brand.Name}</h3>
-      <h2 class="divider">${product.NameWithoutBrand}</h2>
+    // Generate the internal HTML based on the product data structures
+    element.innerHTML = `
+      <h3>${this.product.Brand.Name}</h3>
+      <h2 class="divider">${this.product.NameWithoutBrand}</h2>
       <img
         class="divider"
-        src="${product.Image}"
-        alt="${product.NameWithoutBrand}"
+        src="${this.product.Image}"
+        alt="${this.product.NameWithoutBrand}"
       />
-      <p class="product-card__price">$${product.FinalPrice}</p>
-      <p class="product__color">${product.Colors[0].ColorName}</p>
+      <p class="product-card__price">$${this.product.FinalPrice}</p>
+      <p class="product__color">${this.product.Colors[0].ColorName}</p>
       <p class="product__description">
-        ${product.DescriptionHtmlSimple}
+        ${this.product.DescriptionHtmlSimple}
       </p>
       <div class="product-detail__add">
-        <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
+        <button id="addToCart" data-id="${this.product.Id}">Add to Cart</button>
       </div>
-    </section>`;
+    `;
   }
 }
