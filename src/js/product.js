@@ -1,5 +1,10 @@
-import { setLocalStorage, getLocalStorage } from './utils.mjs';
+import { setLocalStorage, getLocalStorage, getParam } from './utils.mjs';
 import ProductData from './ProductData.mjs';
+
+// Grab the product ID from the URL
+const productId = getParam('product');
+
+console.log(productId); // Outputs: "880RR" (based on your example link)
 
 const dataSource = new ProductData('tents');
 
