@@ -1,12 +1,22 @@
 import { setLocalStorage, getLocalStorage, getParam } from './utils.mjs';
 import ProductData from './ProductData.mjs';
 
-// Grab the product ID from the URL
+const dataSource = new ProductData('tents');
 const productId = getParam('product');
 
-console.log(productId); // Outputs: "880RR" (based on your example link)
-
-const dataSource = new ProductData('tents');
+// --- TEST block ---
+async function testProductFetch() {
+  console.log("Extracted Product ID from URL:", productId);
+  
+  if (productId) {
+    const product = await dataSource.findProductById(productId);
+    console.log("Fetched Product Data:", product);
+  } else {
+    console.warn("No product ID found in the URL query string! Did you click a link with '?product=xxxx'?");
+  }
+}
+testProductFetch();
+// ------------------
 
 // Retrieves the existing cart array, checks for duplicates, and updates local storage
 function addProductToCart(product) {
