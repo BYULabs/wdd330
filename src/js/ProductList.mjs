@@ -1,25 +1,33 @@
+// 1. Template function to generate the HTML string for a single product card
+function productCardTemplate(product) {
+  return `<li class="product-card">
+    <a href="product_pages/index.html?product=${product.Id}">
+      <img
+        src="${product.Image}"
+        alt="Image of ${product.Name}"
+      />
+      <h3 class="card__brand">${product.Brand.Name}</h3>
+      <h2 class="card__name">${product.NameWithoutBrand}</h2>
+      <p class="product-card__price">$${product.ListPrice}</p>
+    </a>
+  </li>`;
+}
+
+// 2. Your ProductList class remains below the template function
 export default class ProductList {
-  // 1. The constructor receives the category, dataSource, and target HTML element
   constructor(category, dataSource, listElement) {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
-    
-    // This will hold our array of products once fetched
     this.products = [];
   }
 
-  // 2. The init method handles the asynchronous data fetching
   async init() {
     try {
-      // Use the dataSource instance to fetch the products
       this.products = await this.dataSource.getData();
-      
-      // For debugging: verify you got the data
       console.log(`${this.category} loaded:`, this.products);
       
-      // Future step: call a method here to render the list to this.listElement
-      // this.renderList(this.products);
+      // Next step: You will use productCardTemplate to render these!
       
     } catch (error) {
       console.error(`Error initializing ProductList for ${this.category}:`, error);
