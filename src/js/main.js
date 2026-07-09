@@ -1,15 +1,15 @@
-// 1. Import the ProductData module
 import ProductData from './ProductData.mjs';
+import ProductList from './ProductList.mjs';
 
-// 2. Create an instance of ProductData for 'tents'
-const tentData = new ProductData('tents');
+// 1. Find the target HTML element where the products will eventually be rendered
+// (Make sure you have an element with this class or ID in your index.html)
+const listElement = document.querySelector('.product-list'); 
 
-// 3. Verify it works by fetching the data
-tentData
-  .getData()
-  .then((data) => {
-    console.log('Tent data loaded successfully:', data);
-  })
-  .catch((error) => {
-    console.error('Error loading tent data:', error);
-  });
+// 2. Create the data source instance for 'tents'
+const dataSource = new ProductData('tents');
+
+// 3. Create the ProductList instance, passing the category, data source, and HTML container
+const productList = new ProductList('tents', dataSource, listElement);
+
+// 4. Initialize the list to fetch and console.log the products
+productList.init();
