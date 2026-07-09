@@ -1,4 +1,3 @@
-// 1. Template function to generate the HTML string for a single product card
 function productCardTemplate(product) {
   return `<li class="product-card">
     <a href="product_pages/index.html?product=${product.Id}">
@@ -13,7 +12,6 @@ function productCardTemplate(product) {
   </li>`;
 }
 
-// 2. Your ProductList class remains below the template function
 export default class ProductList {
   constructor(category, dataSource, listElement) {
     this.category = category;
@@ -25,12 +23,21 @@ export default class ProductList {
   async init() {
     try {
       this.products = await this.dataSource.getData();
-      console.log(`${this.category} loaded:`, this.products);
       
-      // Next step: You will use productCardTemplate to render these!
+      // Call renderList and pass the fetched product array
+      this.renderList(this.products);
       
     } catch (error) {
       console.error(`Error initializing ProductList for ${this.category}:`, error);
     }
+  }
+
+  // New method to render the products into the HTML
+  renderList(list) {
+    // 1. Map through the products to turn each one into an HTML string
+    const htmlStrings = list.map(product => productCardTemplate(product));
+    
+    // 2. Join the array of HTML strings into one massive string and insert it into the DOM
+    this.listElement.innerHTML = htmlStrings.join('');
   }
 }
