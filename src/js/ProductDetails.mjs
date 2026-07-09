@@ -25,10 +25,7 @@ export default class ProductDetails {
       .addEventListener('click', this.addToCart.bind(this));
   }
 
-  /**
-   * Adds the currently viewed product to the localStorage cart.
-   */
-  /**
+ /**
    * Adds the currently viewed product to the localStorage cart.
    */
   addToCart() {
@@ -51,18 +48,6 @@ export default class ProductDetails {
     setLocalStorage('so-cart', cartItems);
     
     // Visual feedback for the user
-    alert(`${this.product.NameWithoutBrand} added to cart!`);
-  }
-    // Retrieve existing cart or initialize an empty array if it doesn't exist
-    const cartItems = getLocalStorage('so-cart') || [];
-    
-    // Add the current product object to the array
-    cartItems.push(this.product);
-    
-    // Save the updated array back to localStorage
-    setLocalStorage('so-cart', cartItems);
-    
-    // Optional: Add a visual indicator that the item was added
     alert(`${this.product.NameWithoutBrand} added to cart!`);
   }
 
