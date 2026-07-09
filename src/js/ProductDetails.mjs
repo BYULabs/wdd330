@@ -28,7 +28,31 @@ export default class ProductDetails {
   /**
    * Adds the currently viewed product to the localStorage cart.
    */
+  /**
+   * Adds the currently viewed product to the localStorage cart.
+   */
   addToCart() {
+    // 1. Retrieve existing cart or initialize an empty array if it doesn't exist
+    const cartItems = getLocalStorage('so-cart') || [];
+    
+    // 2. Check if the product already exists in the cart by ID
+    const existingItem = cartItems.find(item => item.Id === this.product.Id);
+    
+    if (existingItem) {
+      // If it exists, increment the quantity
+      existingItem.Quantity = (existingItem.Quantity || 1) + 1;
+    } else {
+      // If it's a new item, initialize quantity to 1 and push it
+      this.product.Quantity = 1;
+      cartItems.push(this.product);
+    }
+    
+    // 3. Save the updated array back to localStorage
+    setLocalStorage('so-cart', cartItems);
+    
+    // Visual feedback for the user
+    alert(`${this.product.NameWithoutBrand} added to cart!`);
+  }
     // Retrieve existing cart or initialize an empty array if it doesn't exist
     const cartItems = getLocalStorage('so-cart') || [];
     
