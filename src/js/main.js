@@ -3,7 +3,7 @@ import ProductList from './ProductList.mjs';
 
 // 1. Find the target HTML element where the products will eventually be rendered
 // (Make sure you have an element with this class or ID in your index.html)
-const listElement = document.querySelector('.product-list'); 
+const listElement = document.querySelector('.product-list');
 
 // 2. Create the data source instance for 'tents'
 const dataSource = new ProductData('tents');
