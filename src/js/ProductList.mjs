@@ -23,20 +23,22 @@ export default class ProductList {
   async init() {
     try {
       this.products = await this.dataSource.getData();
-      
+
       // Call renderList and pass the fetched product array
       this.renderList(this.products);
-      
     } catch (error) {
-      console.error(`Error initializing ProductList for ${this.category}:`, error);
+      console.error(
+        `Error initializing ProductList for ${this.category}:`,
+        error,
+      );
     }
   }
 
   // New method to render the products into the HTML
   renderList(list) {
     // 1. Map through the products to turn each one into an HTML string
-    const htmlStrings = list.map(product => productCardTemplate(product));
-    
+    const htmlStrings = list.map((product) => productCardTemplate(product));
+
     // 2. Join the array of HTML strings into one massive string and insert it into the DOM
     this.listElement.innerHTML = htmlStrings.join('');
   }
