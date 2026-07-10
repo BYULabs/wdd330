@@ -349,7 +349,71 @@ button {
   }
 }
 
+/* ─── FOOTER ─── */
 footer {
-  font-size: var(--small-font);
-  padding: 1em;
+  background: var(--dark-grey);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 2.5rem 1.5rem 1.5rem;
+}
+
+.footer-inner {
+  max-width: var(--max-width);
+  margin: auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand .logo-text {
+  font-family: var(--font-headline);
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.footer-brand .logo-text .highlight {
+  color: var(--primary-color);
+}
+
+.footer-brand p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+.footer-col h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-col a {
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover {
+  color: var(--primary-color);
+}
+
+.footer-bottom {
+  max-width: var(--max-width);
+  margin: auto;
+  padding-top: 1.5rem;
+  text-align: center;
+  font-size: 0.75rem;
 }
