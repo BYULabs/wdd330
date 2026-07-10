@@ -1,3 +1,5 @@
+import { renderListWithTemplate } from './utils.mjs';
+
 function productCardTemplate(product) {
   return `<li class="product-card">
     <a href="product_pages/index.html?product=${product.Id}">
@@ -23,8 +25,6 @@ export default class ProductList {
   async init() {
     try {
       this.products = await this.dataSource.getData();
-
-      // Call renderList and pass the fetched product array
       this.renderList(this.products);
     } catch (error) {
       console.error(
@@ -34,12 +34,13 @@ export default class ProductList {
     }
   }
 
-  // New method to render the products into the HTML
   renderList(list) {
-    // 1. Map through the products to turn each one into an HTML string
-    const htmlStrings = list.map((product) => productCardTemplate(product));
-
-    // 2. Join the array of HTML strings into one massive string and insert it into the DOM
-    this.listElement.innerHTML = htmlStrings.join('');
+    renderListWithTemplate(
+      productCardTemplate,
+      this.listElement,
+      list,
+      'afterbegin',
+      true,
+    );
   }
 }
