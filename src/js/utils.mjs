@@ -59,3 +59,23 @@ export function renderListWithTemplate(
   // Insert the joined HTML string into the DOM
   parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
 }
+
+export function updateCartCount() {
+  const cartItems = getLocalStorage('so-cart') || [];
+  
+  // Sum up all item quantities
+  const totalItems = cartItems.reduce((sum, item) => sum + (item.Quantity || 1), 0);
+
+  const cartCountElement = document.querySelector('.cart-badge'); 
+
+  if (cartCountElement) {
+    cartCountElement.textContent = totalItems;
+    
+    // Optional: Keep it visible or hide it if empty
+    if (totalItems === 0) {
+      cartCountElement.style.display = 'none';
+    } else {
+      cartCountElement.style.display = 'block'; // or 'inline-block'
+    }
+  }
+}
