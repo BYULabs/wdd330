@@ -5,6 +5,12 @@ function renderCartContents() {
 
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector('.product-list').innerHTML = htmlItems.join('');
+
+  // Step 2: Check if there are items in the cart
+  if (cartItems.length > 0) {
+    // The cart is not empty, ready to calculate the total in Step 3
+    console.log("Cart is not empty. Ready to calculate total!");
+  }
 }
 
 function cartItemTemplate(item) {

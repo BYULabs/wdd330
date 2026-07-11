@@ -61,21 +61,16 @@ export function renderListWithTemplate(
 }
 
 export function updateCartCount() {
-  const cartItems = getLocalStorage('so-cart') || [];
-  
-  // Sum up all item quantities
-  const totalItems = cartItems.reduce((sum, item) => sum + (item.Quantity || 1), 0);
+  const cartItems = getLocalStorage('so-cart');
 
-  const cartCountElement = document.querySelector('.cart-badge'); 
-
-  if (cartCountElement) {
-    cartCountElement.textContent = totalItems;
-    
-    // Optional: Keep it visible or hide it if empty
-    if (totalItems === 0) {
-      cartCountElement.style.display = 'none';
-    } else {
-      cartCountElement.style.display = 'block'; // or 'inline-block'
-    }
+  // Check if cartItems is a valid array before proceeding
+  if (cartItems && Array.isArray(cartItems)) {
+    const count = cartItems.reduce((total, item) => total + (item.Quantity || 1), 0);
+    const badge = document.querySelector('.cart-badge');
+    if (badge) badge.textContent = count;
+  } else {
+    // If there's no valid array or it's empty, ensure it shows 0
+    const badge = document.querySelector('.cart-badge');
+    if (badge) badge.textContent = 0;
   }
 }
