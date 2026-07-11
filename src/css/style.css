@@ -182,7 +182,7 @@ nav a:hover {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -416,4 +416,8 @@ footer {
   padding-top: 1.5rem;
   text-align: center;
   font-size: 0.75rem;
+}
+
+.hide {
+  display: none;
 }
