@@ -29,7 +29,15 @@ export default class ProductDetails {
    * Adds the currently viewed product to the localStorage cart.
    */
   addToCart() {
-    const cartItems = getLocalStorage('so-cart') || [];
+    // FIX: Ensure cartItems is strictly an array to prevent '.find is not a function' TypeError if localStorage is corrupted or holds a non-array object
+    let cartItems = getLocalStorage('so-cart');
+
+    // 2. If it's not a valid array, we convert it to an empty array
+    if (!Array.isArray(cartItems)) {
+      cartItems = [];
+    }
+
+    // 3. The identical logic that will now run smoothly
     const existingItem = cartItems.find((item) => item.Id === this.product.Id);
 
     if (existingItem) {
