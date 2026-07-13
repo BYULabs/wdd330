@@ -22,25 +22,20 @@ export default class ProductList {
     this.products = [];
   }
 
-  async init() {
-    try {
-      this.products = await this.dataSource.getData();
-      this.renderList(this.products);
-    } catch (error) {
-      console.error(
-        `Error initializing ProductList for ${this.category}:`,
-        error,
-      );
-    }
-  }
+// The init method fetches the data and starts rendering
+async init() {
+// 1. Fetches the products from the JSON using the dataSource
+const list = await this.dataSource.getData(); 
 
-  renderList(list) {
-    renderListWithTemplate(
-      productCardTemplate,
-      this.listElement,
-      list,
-      'afterbegin',
-      true,
-    );
-  }
+// 2. Renders the product list in the HTML
+this.renderList(list); 
+}
+
+renderList(list) {
+  // const htmlStrings = list.map(productCardTemplate);
+  // this.listElement.insertAdjacentHTML("afterbegin", htmlStrings.join(""));
+
+  // apply use new utility function instead of the commented code above
+  renderListWithTemplate(productCardTemplate, this.listElement, list);
+}
 }
