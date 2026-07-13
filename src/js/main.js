@@ -1,6 +1,6 @@
 import ProductData from './ProductData.mjs';
 import ProductList from './ProductList.mjs';
-import { updateCartCount } from './utils.mjs';
+import { updateCartCount, initMobileMenu } from './utils.mjs';
 
 // 1. Find the target HTML element where the products will eventually be rendered
 const listElement = document.querySelector('.product-list');
@@ -16,3 +16,6 @@ productList.init();
 
 // 5. Update the cart icon badge count on page load
 updateCartCount();
+
+// 6. Initialize the mobile hamburger menu toggle
+initMobileMenu();

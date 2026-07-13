@@ -19,7 +19,10 @@ function renderCartContents() {
 // Step 3 & 4: Calculate the sum of items and display the footer block
 function calculateCartTotal(cartItems) {
   // Sum each item's price multiplied by its quantity
-  const total = cartItems.reduce((sum, item) => sum + (item.FinalPrice * (item.Quantity || 1)), 0);
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.FinalPrice * (item.Quantity || 1),
+    0,
+  );
 
   // Insert the formatted sum inside the total span element
   const totalElement = document.getElementById('cart-total-amount');
