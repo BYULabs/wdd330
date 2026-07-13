@@ -53,7 +53,7 @@ export function renderListWithTemplate(
 // Inserts a single template into the DOM and executes an optional callback function
 export function renderWithTemplate(template, parentElement, data, callback) {
   parentElement.insertAdjacentHTML('afterbegin', template);
-  
+
   // If a callback function was provided, execute it
   if (callback) {
     callback(data);
@@ -68,6 +68,28 @@ export async function loadTemplate(path) {
 }
 
 // ─── 4. APPLICATION SPECIFIC UI ───
+// Loads header and footer templates, targets placeholder elements, and renders them
+export async function loadHeaderFooter() {
+  // 1. Fetch both template files asynchronously
+  const headerTemplate = await loadTemplate('../partials/header.html');
+  const footerTemplate = await loadTemplate('../partials/footer.html');
+
+  // 2. Grab placeholder elements from the DOM
+  const headerElement = document.querySelector('#main-header');
+  const footerElement = document.querySelector('#main-footer');
+
+  // 3. Render the templates with appropriate callbacks to restore interactive elements
+  if (headerElement) {
+    renderWithTemplate(headerTemplate, headerElement, null, () => {
+      updateCartCount();
+      initMobileMenu();
+    });
+  }
+
+  if (footerElement) {
+    renderWithTemplate(footerTemplate, footerElement);
+  }
+}
 
 // Calculates total items in the cart and updates the header badge number
 export function updateCartCount() {
