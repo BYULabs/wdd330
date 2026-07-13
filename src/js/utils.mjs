@@ -65,12 +65,33 @@ export function updateCartCount() {
 
   // Check if cartItems is a valid array before proceeding
   if (cartItems && Array.isArray(cartItems)) {
-    const count = cartItems.reduce((total, item) => total + (item.Quantity || 1), 0);
+    const count = cartItems.reduce(
+      (total, item) => total + (item.Quantity || 1),
+      0,
+    );
     const badge = document.querySelector('.cart-badge');
     if (badge) badge.textContent = count;
   } else {
     // If there's no valid array or it's empty, ensure it shows 0
     const badge = document.querySelector('.cart-badge');
     if (badge) badge.textContent = 0;
+  }
+}
+
+/**
+ * Initializes the mobile menu toggle functionality using existing utilities.
+ */
+export function initMobileMenu() {
+  const menuToggle = qs('.menu-toggle');
+  const primaryNav = qs('#primary-nav');
+
+  if (menuToggle && primaryNav) {
+    setClick('.menu-toggle', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+
+      // Toggle accessibility attribute and visibility class
+      menuToggle.setAttribute('aria-expanded', !isExpanded);
+      primaryNav.classList.toggle('open');
+    });
   }
 }
