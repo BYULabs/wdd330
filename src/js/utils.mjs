@@ -60,6 +60,13 @@ export function renderWithTemplate(template, parentElement, data, callback) {
   }
 }
 
+// Fetches an external HTML template file and returns its content as a string
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
 // ─── 4. APPLICATION SPECIFIC UI ───
 
 // Calculates total items in the cart and updates the header badge number
