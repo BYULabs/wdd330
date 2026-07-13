@@ -50,6 +50,16 @@ export function renderListWithTemplate(
   parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
 }
 
+// Inserts a single template into the DOM and executes an optional callback function
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.insertAdjacentHTML('afterbegin', template);
+  
+  // If a callback function was provided, execute it
+  if (callback) {
+    callback(data);
+  }
+}
+
 // ─── 4. APPLICATION SPECIFIC UI ───
 
 // Calculates total items in the cart and updates the header badge number
