@@ -1,4 +1,7 @@
-import { getLocalStorage, updateCartCount } from './utils.mjs';
+import { getLocalStorage, loadHeaderFooter } from './utils.mjs';
+
+// 1. Load the global header and footer layout dynamically
+loadHeaderFooter();
 
 function renderCartContents() {
   const cartItems = getLocalStorage('so-cart') || [];
@@ -57,5 +60,3 @@ function cartItemTemplate(item) {
 }
 
 renderCartContents();
-
-updateCartCount();
