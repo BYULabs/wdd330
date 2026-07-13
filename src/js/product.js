@@ -1,6 +1,9 @@
-import { getParam, updateCartCount } from './utils.mjs';
+import { getParam, loadHeaderFooter } from './utils.mjs';
 import ProductData from './ProductData.mjs';
 import ProductDetails from './ProductDetails.mjs';
+
+// 1. Load the global header and footer dynamically
+loadHeaderFooter();
 
 const productId = getParam('product');
 const dataSource = new ProductData('tents');
@@ -9,12 +12,13 @@ const dataSource = new ProductData('tents');
 const product = new ProductDetails(productId, dataSource);
 product.init();
 
-function addProductToCart(product) {
+// Renamed parameter to 'productItem' to avoid naming conflicts
+function addProductToCart(productItem) {
   // Get current cart from LocalStorage or initialize an empty array
   let cart = JSON.parse(localStorage.getItem('so-cart')) || [];
 
   // Append the new product to the cart
-  cart.push(product);
+  cart.push(productItem);
 
   // Persist the updated cart back to LocalStorage as a JSON string
   localStorage.setItem('so-cart', JSON.stringify(cart));
@@ -22,8 +26,7 @@ function addProductToCart(product) {
 
 // add to cart button event handler
 async function addToCartHandler(e) {
-  const product = await dataSource.findProductById(e.target.dataset.id);
-  addProductToCart(product);
+  // Renamed local variable to 'productItem' here as well
+  const productItem = await dataSource.findProductById(e.target.dataset.id);
+  addProductToCart(productItem);
 }
-
-updateCartCount();
