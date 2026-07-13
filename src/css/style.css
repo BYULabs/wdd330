@@ -109,6 +109,107 @@ nav a:hover {
   color: white;
 }
 
+/* Hamburger Icon Styling */
+.menu-toggle {
+  display: none; /* Hidden on desktop by default */
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.hamburger {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--dark-grey);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--dark-grey);
+  transition:
+    transform 0.2s ease-in-out,
+    top 0.2s ease-in-out;
+}
+
+.hamburger::before {
+  top: -6px;
+}
+.hamburger::after {
+  top: 6px;
+}
+
+/* Hamburger Transform to 'X' when open */
+.menu-toggle[aria-expanded='true'] .hamburger {
+  background-color: transparent;
+}
+.menu-toggle[aria-expanded='true'] .hamburger::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+.menu-toggle[aria-expanded='true'] .hamburger::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* Responsive Breakpoint (Mobile Mechanics) */
+@media (max-width: 768px) {
+  header {
+    padding: 0.75rem 1rem;
+  }
+
+  .menu-toggle {
+    display: block; /* Show the button on mobile screens */
+    order: 1; /* Moves menu toggle to the left edge of header-actions */
+  }
+
+  .cart {
+    order: 2; /* Positions cart next to the toggle button */
+  }
+
+  /* Transform normal nav into a mobile dropdown panel */
+  nav {
+    display: none; /* Hide default state */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--light-grey);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    z-index: 105;
+  }
+
+  /* Simple utility class triggered by JS */
+  nav.open {
+    display: flex;
+  }
+
+  nav a {
+    width: 100%;
+    padding: 1rem 2rem;
+    border-radius: 0;
+    font-size: 1.1rem;
+  }
+
+  nav a:hover {
+    background: var(--cream);
+    color: var(--secondary-color);
+  }
+}
+
 /* Cart icon */
 .cart {
   position: relative;
@@ -152,6 +253,7 @@ nav a:hover {
   justify-content: center;
 }
 
+/* ─── HERO ─── */
 .hero {
   position: relative;
 }
@@ -182,7 +284,7 @@ nav a:hover {
   margin-top: -1.3em;
 }
 
-.logo--square>div {
+.logo--square > div {
   margin-top: -1.7em;
 }
 
