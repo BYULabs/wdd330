@@ -1,19 +1,32 @@
-// wrapper for querySelector...returns matching element
+// ─── 1. CORE UTILITIES ───
+
+// Wrapper for querySelector that defaults to searching the document
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
-// retrieve data from localstorage
+// ─── 2. DATA & STORAGE HELPERS ───
+
+// Retrieves and parses data from LocalStorage
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-// save data to local storage
+
+// Converts data to a string and saves it to LocalStorage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
+
+// Extracts a specific query parameter value from the current page URL
+export function getParam(param) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(param);
+}
+
+// ─── 3. UI & EVENT HELPERS ───
+
+// Attaches an event listener for both mobile touch and desktop click events
 export function setClick(selector, callback) {
   qs(selector).addEventListener('touchend', (event) => {
     event.preventDefault();
@@ -22,25 +35,7 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener('click', callback);
 }
 
-/**
- * Retrieves the value of a specific parameter from the current URL's query string.
- * @param {string} param - The name of the URL parameter to retrieve.
- * @returns {string|null} The value of the parameter, or null if it doesn't exist.
- */
-export function getParam(param) {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  return urlParams.get(param);
-}
-
-/**
- * Renders a list of items into the DOM using a template function.
- * @param {Function} templateFn - The function that returns an HTML string for an item.
- * @param {HTMLElement} parentElement - The DOM element where the list will be inserted.
- * @param {Array} list - The array of data items to render.
- * @param {string} [position="afterbegin"] - Where to insert the HTML relative to the parentElement.
- * @param {boolean} [clear=false] - Whether to clear the parent element's content first.
- */
+// Converts an array of data into HTML templates and inserts them into the DOM
 export function renderListWithTemplate(
   templateFn,
   parentElement,
@@ -48,22 +43,58 @@ export function renderListWithTemplate(
   position = 'afterbegin',
   clear = false,
 ) {
-  // If clear is true, wipe out the existing HTML first
   if (clear) {
     parentElement.innerHTML = '';
   }
-
-  // Map each item to its template HTML string and join them
   const htmlStrings = list.map(templateFn);
-
-  // Insert the joined HTML string into the DOM
   parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
 }
 
+// Inserts a single template into the DOM and executes an optional callback function
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.insertAdjacentHTML('afterbegin', template);
+
+  // If a callback function was provided, execute it
+  if (callback) {
+    callback(data);
+  }
+}
+
+// Fetches an external HTML template file and returns its content as a string
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
+// ─── 4. APPLICATION SPECIFIC UI ───
+// Loads header and footer templates, targets placeholder elements, and renders them
+export async function loadHeaderFooter() {
+  // 1. Fetch both template files asynchronously
+  const headerTemplate = await loadTemplate('../partials/header.html');
+  const footerTemplate = await loadTemplate('../partials/footer.html');
+
+  // 2. Grab placeholder elements from the DOM
+  const headerElement = document.querySelector('#main-header');
+  const footerElement = document.querySelector('#main-footer');
+
+  // 3. Render the templates with appropriate callbacks to restore interactive elements
+  if (headerElement) {
+    renderWithTemplate(headerTemplate, headerElement, null, () => {
+      updateCartCount();
+      initMobileMenu();
+    });
+  }
+
+  if (footerElement) {
+    renderWithTemplate(footerTemplate, footerElement);
+  }
+}
+
+// Calculates total items in the cart and updates the header badge number
 export function updateCartCount() {
   const cartItems = getLocalStorage('so-cart');
 
-  // Check if cartItems is a valid array before proceeding
   if (cartItems && Array.isArray(cartItems)) {
     const count = cartItems.reduce(
       (total, item) => total + (item.Quantity || 1),
@@ -72,15 +103,12 @@ export function updateCartCount() {
     const badge = document.querySelector('.cart-badge');
     if (badge) badge.textContent = count;
   } else {
-    // If there's no valid array or it's empty, ensure it shows 0
     const badge = document.querySelector('.cart-badge');
     if (badge) badge.textContent = 0;
   }
 }
 
-/**
- * Initializes the mobile menu toggle functionality using existing utilities.
- */
+// Handles the accessibility attributes and visibility toggle for the mobile navigation menu
 export function initMobileMenu() {
   const menuToggle = qs('.menu-toggle');
   const primaryNav = qs('#primary-nav');
@@ -88,8 +116,6 @@ export function initMobileMenu() {
   if (menuToggle && primaryNav) {
     setClick('.menu-toggle', () => {
       const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-
-      // Toggle accessibility attribute and visibility class
       menuToggle.setAttribute('aria-expanded', !isExpanded);
       primaryNav.classList.toggle('open');
     });
