@@ -1,23 +1,50 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Sleep Outside</title>
-
+    <title>Sleep Outside | Product Details</title>
     <link rel="stylesheet" href="/css/style.css" />
-
     <script type="module" src="/js/product.js"></script>
   </head>
 
   <body>
+    <!-- Dynamically loaded -->
     <header id="main-header" class="divider"></header>
 
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a>
+      <span class="separator">›</span>
+      <a href="#" id="breadcrumb-category">Category</a>
+      <span class="separator">›</span>
+      <span class="current" id="breadcrumb-name">Product Name</span>
+    </nav>
+
+    <!-- MAIN PRODUCT DETAIL WRAPPER -->
     <main class="product-detail divider"></main>
 
+    <!-- RELATED PRODUCTS -->
+    <section class="related-section">
+      <h2>You Might Also Like</h2>
+      <div class="related-grid" id="related-grid">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast">
+      <span class="toast-icon">✅</span>
+      <span id="toast-message">Added to cart!</span>
+    </div>
+
+    <!-- ZOOM OVERLAY -->
+    <div class="zoom-overlay" id="zoom-overlay">
+      <button class="zoom-close" id="zoom-close">✕</button>
+      <img id="zoom-image" src="" alt="Zoomed product image" />
+    </div>
+
+    <!-- Dynamically loaded -->
     <footer id="main-footer"></footer>
   </body>
 </html>
