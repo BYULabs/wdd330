@@ -1,13 +1,16 @@
 import { renderListWithTemplate } from './utils.mjs';
 
 function productCardTemplate(product) {
+  // Safe image path checker: fallback to nested structure if flat .Image doesn't exist
+  const imageUrl = product.Image || (product.Images && product.Images.PrimaryMedium) || '';
+
   return `<li class="product-card">
     <a href="product_pages/index.html?product=${product.Id}">
       <img
-        src="${product.Image}"
-        alt="Image of ${product.Name}"
+        src="${imageUrl}"
+        alt="Image of ${product.NameWithoutBrand || product.Name}"
       />
-      <h3 class="card__brand">${product.Brand.Name}</h3>
+      <h3 class="card__brand">${product.Brand ? product.Brand.Name : ''}</h3>
       <h2 class="card__name">${product.NameWithoutBrand}</h2>
       <p class="product-card__price">$${product.ListPrice}</p>
     </a>
@@ -24,7 +27,11 @@ export default class ProductList {
 
   async init() {
     try {
-      this.products = await this.dataSource.getData();
+      const data = await this.dataSource.getData();
+      
+      // If the loaded data has a '.Result' array, unpack it. Otherwise use the raw array.
+      this.products = Array.isArray(data) ? data : (data.Result || []);
+      
       this.renderList(this.products);
     } catch (error) {
       console.error(
