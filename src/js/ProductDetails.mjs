@@ -80,7 +80,7 @@ export default class ProductDetails {
       : 'Products';
     document.getElementById('breadcrumb-category').textContent = catName;
     document.getElementById('breadcrumb-category').href =
-      `../index.html#${this.category}`;
+      `../product_listing/index.html?category=${this.category}`;
     document.getElementById('breadcrumb-name').textContent =
       this.product.NameWithoutBrand;
 
