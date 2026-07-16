@@ -1,11 +1,11 @@
 import { renderListWithTemplate } from './utils.mjs';
 
-function productCardTemplate(product) {
-  // Safe image path checker: fallback to nested structure if flat .Image doesn't exist
+function productCardTemplate(product, category) { // 💡 Add category as a parameter
   const imageUrl = product.Image || (product.Images && product.Images.PrimaryMedium) || '';
 
+  // 💡 FIX: Append "&category=${category}" to the query string
   return `<li class="product-card">
-    <a href="product_pages/index.html?product=${product.Id}">
+    <a href="product_pages/index.html?product=${product.Id}&category=${category}">
       <img
         src="${imageUrl}"
         alt="Image of ${product.NameWithoutBrand || product.Name}"
@@ -43,8 +43,9 @@ export default class ProductList {
   }
 
   renderList(list) {
+    // Pass a wrapper function that binds the current category to each template item
     renderListWithTemplate(
-      productCardTemplate,
+      (product) => productCardTemplate(product, this.category),
       this.listElement,
       list,
       'afterbegin',
