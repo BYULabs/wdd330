@@ -27,10 +27,11 @@ export default class ProductList {
 
   async init() {
     try {
-      const data = await this.dataSource.getData();
+      // 1. Pass the instance category parameter to the data source
+      const list = await this.dataSource.getData(this.category);
       
-      // If the loaded data has a '.Result' array, unpack it. Otherwise use the raw array.
-      this.products = Array.isArray(data) ? data : (data.Result || []);
+      // 2. Assign the retrieved list array directly
+      this.products = list || [];
       
       this.renderList(this.products);
     } catch (error) {
