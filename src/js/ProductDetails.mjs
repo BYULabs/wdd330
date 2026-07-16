@@ -22,12 +22,37 @@ export default class ProductDetails {
       return;
     }
 
-    // Set up local image list (Primary + Extra Images)
+    // Safe Extraction of Primary Image (checking both casings)
     const primaryImg =
-      this.product.Images?.PrimaryExtraLarge || this.product.Image || '';
-    this.allImages = [{ title: 'Primary', src: primaryImg }];
-    if (this.product.Images?.ExtraImages) {
-      this.allImages.push(...this.product.Images.ExtraImages);
+      this.product.Images?.PrimaryExtraLarge ||
+      this.product.Images?.primaryExtraLarge ||
+      this.product.Image ||
+      '';
+
+    this.allImages = [{ title: 'Primary Image', src: primaryImg }];
+
+    // Safe Extraction of Extra Images (checking both ExtraImages and extraImages)
+    const extraImagesList =
+      this.product.Images?.ExtraImages || this.product.Images?.extraImages;
+
+    if (extraImagesList && Array.isArray(extraImagesList)) {
+      const parsedExtras = extraImagesList.map((imgItem, index) => {
+        // If it's a plain URL string:
+        if (typeof imgItem === 'string') {
+          return {
+            title: `Alternate View ${index + 1}`,
+            src: imgItem,
+          };
+        }
+        // If it's an object, safely check both PascalCase (Src) and camelCase (src)
+        return {
+          title:
+            imgItem.Title || imgItem.title || `Alternate View ${index + 1}`,
+          src: imgItem.Src || imgItem.src || '',
+        };
+      });
+
+      this.allImages.push(...parsedExtras);
     }
 
     this.renderProductDetails('main.product-detail');
