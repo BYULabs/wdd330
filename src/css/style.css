@@ -2437,7 +2437,7 @@ nav a:hover {
 /* ─── TOAST ─── */
 .listing-toast {
   position: fixed;
-  bottom: 2rem;
+  bottom: 0rem;
   right: 2rem;
   background: var(--secondary-color, #2d5a27);
   color: white;
