@@ -2,31 +2,16 @@ import { getParam, loadHeaderFooter } from './utils.mjs';
 import ProductData from './ProductData.mjs';
 import ProductDetails from './ProductDetails.mjs';
 
-// 1. Load the global header and footer dynamically
+// 1. Load global layouts dynamically
 loadHeaderFooter();
 
+// 2. Extract both ID and Category from URL search query parameters
 const productId = getParam('product');
-const dataSource = new ProductData('tents');
+const category = getParam('category'); // <--- Extract category from the URL!
 
-// --- HERE WE CONNECT THE CLASS SO THAT THEY CAN DRAW THE PRODUCT  ---
-const product = new ProductDetails(productId, dataSource);
+// 3. Instantiate the API data source
+const dataSource = new ProductData();
+
+// 4. Pass the category into ProductDetails alongside the ID
+const product = new ProductDetails(productId, dataSource, category);
 product.init();
-
-// Renamed parameter to 'productItem' to avoid naming conflicts
-function addProductToCart(productItem) {
-  // Get current cart from LocalStorage or initialize an empty array
-  let cart = JSON.parse(localStorage.getItem('so-cart')) || [];
-
-  // Append the new product to the cart
-  cart.push(productItem);
-
-  // Persist the updated cart back to LocalStorage as a JSON string
-  localStorage.setItem('so-cart', JSON.stringify(cart));
-}
-
-// add to cart button event handler
-async function addToCartHandler(e) {
-  // Renamed local variable to 'productItem' here as well
-  const productItem = await dataSource.findProductById(e.target.dataset.id);
-  addProductToCart(productItem);
-}
