@@ -1,7 +1,9 @@
 import { renderListWithTemplate } from './utils.mjs';
 
-function productCardTemplate(product, category) { // 💡 Add category as a parameter
-  const imageUrl = product.Image || (product.Images && product.Images.PrimaryMedium) || '';
+function productCardTemplate(product, category) {
+  // 💡 Add category as a parameter
+  const imageUrl =
+    product.Image || (product.Images && product.Images.PrimaryMedium) || '';
 
   // 💡 FIX: Append "&category=${category}" to the query string
   return `<li class="product-card">
@@ -29,10 +31,10 @@ export default class ProductList {
     try {
       // 1. Pass the instance category parameter to the data source
       const list = await this.dataSource.getData(this.category);
-      
+
       // 2. Assign the retrieved list array directly
       this.products = list || [];
-      
+
       this.renderList(this.products);
     } catch (error) {
       console.error(

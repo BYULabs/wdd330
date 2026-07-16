@@ -8,7 +8,7 @@ loadHeaderFooter();
 // 2. Instantiate and initiate all 4 product lists concurrently
 const categories = ['tents', 'backpacks', 'sleeping-bags', 'hammocks'];
 
-categories.forEach(category => {
+categories.forEach((category) => {
   const listElement = document.querySelector(`#carousel-${category}`);
   if (listElement) {
     const dataSource = new ProductData();
@@ -21,16 +21,18 @@ categories.forEach(category => {
 const tabs = document.querySelectorAll('.category-tab');
 const sections = document.querySelectorAll('.category-content');
 
-tabs.forEach(tab => {
+tabs.forEach((tab) => {
   tab.addEventListener('click', () => {
     // Remove active markers everywhere
-    tabs.forEach(t => t.classList.remove('active'));
-    sections.forEach(s => s.classList.remove('active'));
+    tabs.forEach((t) => t.classList.remove('active'));
+    sections.forEach((s) => s.classList.remove('active'));
 
     // Apply active marker to clicked target
     tab.classList.add('active');
     const targetCategory = tab.getAttribute('data-category');
-    const activeSection = document.querySelector(`.category-content[data-category="${targetCategory}"]`);
+    const activeSection = document.querySelector(
+      `.category-content[data-category="${targetCategory}"]`,
+    );
     if (activeSection) {
       activeSection.classList.add('active');
     }
@@ -40,14 +42,14 @@ tabs.forEach(tab => {
 // 4. Carousel Arrow Scroll Hook Mechanics
 const wrappers = document.querySelectorAll('.carousel-wrapper');
 
-wrappers.forEach(wrapper => {
+wrappers.forEach((wrapper) => {
   const container = wrapper.querySelector('.carousel-track-container');
   const prevBtn = wrapper.querySelector('.carousel-arrow--prev');
   const nextBtn = wrapper.querySelector('.carousel-arrow--next');
 
   if (container && prevBtn && nextBtn) {
     // Scroll distance defaults roughly to two cards' wide profiles
-    const scrollAmount = 500; 
+    const scrollAmount = 500;
 
     prevBtn.addEventListener('click', () => {
       container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
