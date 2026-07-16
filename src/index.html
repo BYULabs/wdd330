@@ -5,37 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sleep Outside | Home</title>
     <link rel="stylesheet" href="/css/style.css" />
-
     <script src="./js/main.js" type="module"></script>
   </head>
 
   <body>
     <header id="main-header" class="divider"></header>
-    <main class="divider">
-      <div class="hero">
-        <img
-          src="/images/banner-sm.jpg"
-          srcset="images/banner-sm.jpg 500w, images/banner.jpg"
-          alt="image of a high mountain lake"
-        />
-        <div class="logo logo--square">
-          <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
-          <div>Sleep<span class="highlight">Outside</span></div>
-        </div>
-        <div class="mission">
-          <p>
-            Our mission is to provide you with everything you need to sleep
-            outside comfortably at an affordable price.
-          </p>
-        </div>
-      </div>
 
-      <section class="products">
-        <h2>Top Products</h2>
-        <!-- Leave this list completely empty. Your JavaScript will populate it! -->
-        <ul class="product-list"></ul>
+    <!-- HERO -->
+    <section class="hero-section">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <h1>Gear Up. <span class="highlight">Sleep Outside.</span></h1>
+        <p>Everything you need to sleep outside comfortably — tents, backpacks, sleeping bags and more — at prices that won't break camp.</p>
+        <a href="#category-tabs" class="hero-btn">Shop Now →</a>
+      </div>
+      <svg class="hero-mountains" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path fill="rgba(255,255,255,0.05)" d="M0,120 L360,40 L720,90 L1080,30 L1440,80 L1440,120 Z"/>
+        <path fill="rgba(255,255,255,0.03)" d="M0,120 L200,60 L500,100 L800,50 L1100,85 L1440,45 L1440,120 Z"/>
+        <path fill="var(--cream)" d="M0,120 L120,95 L300,105 L500,90 L700,100 L900,88 L1100,98 L1300,92 L1440,96 L1440,120 Z"/>
+      </svg>
+    </section>
+
+    <!-- CATEGORY TABS -->
+    <div class="category-nav" id="category-tabs">
+      <div class="category-nav-inner">
+        <button class="category-tab active" data-category="tents">
+          <span class="tab-icon">
+            <img src="/images/category-tents.svg" alt="Tents Icon" />
+          </span> 
+          Tents
+        </button>
+        <button class="category-tab" data-category="backpacks">
+          <span class="tab-icon">
+            <img src="/images/category-backpacks.svg" alt="Backpacks Icon" />
+          </span> 
+          Backpacks
+        </button>
+        <button class="category-tab" data-category="sleeping-bags">
+          <span class="tab-icon">
+            <img src="/images/category-sleepingbags.svg" alt="Sleeping Bags Icon" />
+          </span> 
+          Sleeping Bags
+        </button>
+        <button class="category-tab" data-category="hammocks">
+          <span class="tab-icon">
+            <img src="/images/category-hammocks.svg" alt="Hammocks Icon" />
+          </span> 
+          Hammocks
+        </button>
+      </div>
+    </div>
+
+    <!-- PRODUCT CAROUSELS -->
+    <main>
+      <!-- TENTS -->
+      <section class="products-section category-content active" data-category="tents">
+        <div class="section-header">
+          <h2>
+            <span class="category-icon"><img src="/images/category-tents.svg" alt="Tents Icon" /></span> 
+            Tents
+          </h2>
+          <a href="#" class="see-all">See all tents →</a>
+        </div>
+        <div class="carousel-wrapper">
+          <button class="carousel-arrow carousel-arrow--prev" aria-label="Previous">‹</button>
+          <div class="carousel-track-container">
+            <ul class="carousel-track product-list" id="carousel-tents">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+          <button class="carousel-arrow carousel-arrow--next" aria-label="Next">›</button>
+        </div>
+      </section>
+
+      <!-- BACKPACKS -->
+      <section class="products-section category-content" data-category="backpacks">
+        <div class="section-header">
+          <h2>
+            <span class="category-icon"><img src="/images/category-backpacks.svg" alt="Backpacks Icon" /></span> 
+            Backpacks
+          </h2>
+          <a href="#" class="see-all">See all backpacks →</a>
+        </div>
+        <div class="carousel-wrapper">
+          <button class="carousel-arrow carousel-arrow--prev" aria-label="Previous">‹</button>
+          <div class="carousel-track-container">
+            <ul class="carousel-track product-list" id="carousel-backpacks">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+          <button class="carousel-arrow carousel-arrow--next" aria-label="Next">›</button>
+        </div>
+      </section>
+
+      <!-- SLEEPING BAGS -->
+      <section class="products-section category-content" data-category="sleeping-bags">
+        <div class="section-header">
+          <h2>
+            <span class="category-icon"><img src="/images/category-sleepingbags.svg" alt="Sleeping Bags Icon" /></span> 
+            Sleeping Bags
+          </h2>
+          <a href="#" class="see-all">See all sleeping bags →</a>
+        </div>
+        <div class="carousel-wrapper">
+          <button class="carousel-arrow carousel-arrow--prev" aria-label="Previous">‹</button>
+          <div class="carousel-track-container">
+            <ul class="carousel-track product-list" id="carousel-sleeping-bags">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+          <button class="carousel-arrow carousel-arrow--next" aria-label="Next">›</button>
+        </div>
+      </section>
+
+      <!-- HAMMOCKS -->
+      <section class="products-section category-content" data-category="hammocks">
+        <div class="section-header">
+          <h2>
+            <span class="category-icon"><img src="/images/category-hammocks.svg" alt="Hammocks Icon" /></span> 
+            Hammocks
+          </h2>
+          <a href="#" class="see-all">See all hammocks →</a>
+        </div>
+        <div class="carousel-wrapper">
+          <button class="carousel-arrow carousel-arrow--prev" aria-label="Previous">‹</button>
+          <div class="carousel-track-container">
+            <ul class="carousel-track product-list" id="carousel-hammocks">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+          <button class="carousel-arrow carousel-arrow--next" aria-label="Next">›</button>
+        </div>
       </section>
     </main>
+
+    <!-- FEATURES STRIP -->
+    <section class="features-strip">
+      <div class="features-inner">
+        <div class="feature-item">
+          <div class="feature-icon-wrap">
+            <img src="/images/truck.svg" alt="Free Shipping" />
+          </div>
+          <h3>Free Shipping</h3>
+          <p>On orders over $75. Delivered to your door or your trailhead.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon-wrap">
+            <img src="/images/shield.svg" alt="Lifetime Warranty" />
+          </div>
+          <h3>Lifetime Warranty</h3>
+          <p>Built to last. If it breaks, we'll repair or replace it.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon-wrap">
+            <img src="/images/refresh-cw.svg" alt="Easy Returns" />
+          </div>
+          <h3>Easy Returns</h3>
+          <p>Not the right fit? Return within 60 days, no questions asked.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon-wrap">
+            <img src="/images/message-circle.svg" alt="Expert Advice" />
+          </div>
+          <h3>Expert Advice</h3>
+          <p>Our team of campers is here to help you find the right gear.</p>
+        </div>
+      </div>
+    </section>
+
     <footer id="main-footer"></footer>
   </body>
 </html>
