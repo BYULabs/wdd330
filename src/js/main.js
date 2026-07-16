@@ -11,7 +11,7 @@ const categories = ['tents', 'backpacks', 'sleeping-bags', 'hammocks'];
 categories.forEach(category => {
   const listElement = document.querySelector(`#carousel-${category}`);
   if (listElement) {
-    const dataSource = new ProductData(category);
+    const dataSource = new ProductData();
     const productList = new ProductList(category, dataSource, listElement);
     productList.init();
   }
