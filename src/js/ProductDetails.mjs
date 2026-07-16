@@ -1,43 +1,32 @@
 import { setLocalStorage, getLocalStorage, updateCartCount } from './utils.mjs';
 
 export default class ProductDetails {
-  constructor(productId, dataSource) {
+  // 1. Accept category in the constructor
+  constructor(productId, dataSource, category) {
     this.productId = productId;
     this.dataSource = dataSource;
-    this.product = {}; // Will hold the product object once fetched
+    this.category = category; // <--- Save category reference
+    this.product = {}; 
   }
 
-  /**
-   * Initializes the product details page by fetching data,
-   * rendering the HTML, and attaching the cart event listener.
-   */
   async init() {
-    // 1. Use the datasource to get the details for the current product.
-    this.product = await this.dataSource.findProductById(this.productId);
+    // 2. Pass category to findProductById so the API can resolve the path
+    this.product = await this.dataSource.findProductById(this.productId, this.category);
 
-    // 2. Render the HTML details onto the page
     this.renderProductDetails('main.product-detail');
 
-    // 3. Add a listener to the Add to Cart button using .bind(this)
-    // so 'this' inside addToCart refers to this class instance.
     document
       .getElementById('addToCart')
       .addEventListener('click', this.addToCart.bind(this));
   }
 
-  /**
-   * Adds the currently viewed product to the localStorage cart.
-   */
   addToCart() {
-    // FIX: Ensure cartItems is strictly an array to prevent '.find is not a function' TypeError if localStorage is corrupted or holds a non-array object
     let cartItems = getLocalStorage('so-cart');
 
-    // 2. If it's not a valid array, we convert it to an empty array
     if (!Array.isArray(cartItems)) {
       cartItems = [];
     }
 
-    // 3. The identical logic that will now run smoothly
     const existingItem = cartItems.find((item) => item.Id === this.product.Id);
 
     if (existingItem) {
@@ -48,31 +37,30 @@ export default class ProductDetails {
     }
 
     setLocalStorage('so-cart', cartItems);
-
     updateCartCount();
 
     alert(`${this.product.NameWithoutBrand} added to cart!`);
   }
 
-  /**
-   * Generates the HTML structure for the product details and injects it into the DOM.
-   * @param {string} selector - The CSS selector of the container element (e.g., 'main.product-detail')
-   */
   renderProductDetails(selector) {
     const element = document.querySelector(selector);
     if (!element) return;
 
-    // Generate the internal HTML based on the product data structures
+    // 3. Safe image path fallback logic
+    const imageUrl = this.product.Image || 
+                     (this.product.Images && this.product.Images.PrimaryLarge) || 
+                     '';
+
     element.innerHTML = `
-      <h3>${this.product.Brand.Name}</h3>
+      <h3>${this.product.Brand ? this.product.Brand.Name : ''}</h3>
       <h2 class="divider">${this.product.NameWithoutBrand}</h2>
       <img
         class="divider"
-        src="${this.product.Image}"
+        src="${imageUrl}"
         alt="${this.product.NameWithoutBrand}"
       />
       <p class="product-card__price">$${this.product.FinalPrice}</p>
-      <p class="product__color">${this.product.Colors[0].ColorName}</p>
+      <p class="product__color">${this.product.Colors && this.product.Colors[0] ? this.product.Colors[0].ColorName : ''}</p>
       <p class="product__description">
         ${this.product.DescriptionHtmlSimple}
       </p>
