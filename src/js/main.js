@@ -2,17 +2,61 @@ import ProductData from './ProductData.mjs';
 import ProductList from './ProductList.mjs';
 import { loadHeaderFooter } from './utils.mjs';
 
-// 1. Asynchronously load the global header and footer partials
+// 1. Asynchronously load global site elements
 loadHeaderFooter();
 
-// 2. Find the target HTML element where the products will eventually be rendered
-const listElement = document.querySelector('.product-list');
+// 2. Instantiate and initiate all 4 product lists concurrently
+const categories = ['tents', 'backpacks', 'sleeping-bags', 'hammocks'];
 
-// 3. Create the data source instance for 'tents'
-const dataSource = new ProductData('tents');
+categories.forEach((category) => {
+  const listElement = document.querySelector(`#carousel-${category}`);
+  if (listElement) {
+    const dataSource = new ProductData();
+    const productList = new ProductList(category, dataSource, listElement);
+    productList.init();
+  }
+});
 
-// 4. Create the ProductList instance, passing the category, data source, and HTML container
-const productList = new ProductList('tents', dataSource, listElement);
+// 3. Category Tabs Toggle Mechanism
+const tabs = document.querySelectorAll('.category-tab');
+const sections = document.querySelectorAll('.category-content');
 
-// 5. Initialize the list to fetch and render the products
-productList.init();
+tabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    // Remove active markers everywhere
+    tabs.forEach((t) => t.classList.remove('active'));
+    sections.forEach((s) => s.classList.remove('active'));
+
+    // Apply active marker to clicked target
+    tab.classList.add('active');
+    const targetCategory = tab.getAttribute('data-category');
+    const activeSection = document.querySelector(
+      `.category-content[data-category="${targetCategory}"]`,
+    );
+    if (activeSection) {
+      activeSection.classList.add('active');
+    }
+  });
+});
+
+// 4. Carousel Arrow Scroll Hook Mechanics
+const wrappers = document.querySelectorAll('.carousel-wrapper');
+
+wrappers.forEach((wrapper) => {
+  const container = wrapper.querySelector('.carousel-track-container');
+  const prevBtn = wrapper.querySelector('.carousel-arrow--prev');
+  const nextBtn = wrapper.querySelector('.carousel-arrow--next');
+
+  if (container && prevBtn && nextBtn) {
+    // Scroll distance defaults roughly to two cards' wide profiles
+    const scrollAmount = 500;
+
+    prevBtn.addEventListener('click', () => {
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  }
+});

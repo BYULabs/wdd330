@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sleep Outside | Products</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <!-- Dynamic JS Module -->
+    <script type="module" src="/js/product-listing.js"></script>
+  </head>
+  <body>
+    <!-- Main Header -->
+    <header id="main-header" class="divider"></header>
+
+    <!-- ─── LISTING MAIN CONTENT ─── -->
+    <main class="listing-page divider">
+      <!-- Category Hero Banner -->
+      <div class="category-hero" id="category-hero">
+        <div class="category-hero__text">
+          <div class="category-hero__icon" id="hero-icon">⛺</div>
+          <h1 id="hero-title">Products</h1>
+          <p id="hero-description">Loading category details...</p>
+        </div>
+        <div class="category-hero__decor" id="hero-decor">⛺</div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="listing-toolbar">
+        <div class="listing-toolbar__left">
+          <span class="product-count" id="product-count"></span>
+          <select class="sort-select" id="sort-select">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name-az">Name: A to Z</option>
+            <option value="name-za">Name: Z to A</option>
+            <option value="rating">Top Rated</option>
+          </select>
+          <button class="filter-mobile-toggle" id="filter-mobile-toggle">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M4 6h16M4 12h16M4 18h16"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+              />
+            </svg>
+            Filters
+          </button>
+        </div>
+        <div class="view-toggle">
+          <button
+            class="view-toggle-btn active"
+            data-view="grid"
+            title="Grid view"
+          >
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="7" height="7" rx="1" />
+              <rect x="14" y="3" width="7" height="7" rx="1" />
+              <rect x="3" y="14" width="7" height="7" rx="1" />
+              <rect x="14" y="14" width="7" height="7" rx="1" />
+            </svg>
+          </button>
+          <button class="view-toggle-btn" data-view="list" title="List view">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="4" rx="1" />
+              <rect x="3" y="10" width="18" height="4" rx="1" />
+              <rect x="3" y="16" width="18" height="4" rx="1" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Filters -->
+      <div class="active-filters" id="active-filters"></div>
+
+      <!-- Sidebar + Grid -->
+      <div class="listing-content">
+        <!-- Sidebar -->
+        <aside class="filter-sidebar collapsed-mobile" id="filter-sidebar">
+          <h3>Filters</h3>
+
+          <!-- Brand filter -->
+          <div class="filter-group" data-filter="brand">
+            <div class="filter-group__title">
+              Brand <span class="chevron">▼</span>
+            </div>
+            <div class="filter-group__options" id="filter-brand-options">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Price filter -->
+          <div class="filter-group" data-filter="price">
+            <div class="filter-group__title">
+              Price Range <span class="chevron">▼</span>
+            </div>
+            <div class="filter-group__options">
+              <div class="price-range">
+                <input
+                  type="number"
+                  id="price-min"
+                  placeholder="$ Min"
+                  min="0"
+                />
+                <span class="separator">—</span>
+                <input
+                  type="number"
+                  id="price-max"
+                  placeholder="$ Max"
+                  min="0"
+                />
+              </div>
+              <button class="price-range-btn" id="price-apply-btn">
+                Apply
+              </button>
+            </div>
+          </div>
+
+          <!-- On Sale filter -->
+          <div class="filter-group" data-filter="sale">
+            <div class="filter-group__title">
+              On Sale <span class="chevron">▼</span>
+            </div>
+            <div class="filter-group__options">
+              <label class="filter-option">
+                <input type="checkbox" data-filter="sale" value="on-sale" />
+                On Sale Only
+              </label>
+            </div>
+          </div>
+
+          <!-- Rating filter -->
+          <div class="filter-group" data-filter="rating">
+            <div class="filter-group__title">
+              Rating <span class="chevron">▼</span>
+            </div>
+            <div class="filter-group__options">
+              <label class="filter-option">
+                <input type="checkbox" data-filter="rating" value="4+" />
+                ★★★★☆ &amp; up
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="rating" value="3+" />
+                ★★★☆☆ &amp; up
+              </label>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Product Grid Target -->
+        <div class="product-grid" id="product-grid">
+          <!-- Populated dynamically via JavaScript modules -->
+        </div>
+      </div>
+
+      <!-- Pagination Target -->
+      <div class="pagination" id="pagination"></div>
+    </main>
+
+    <!-- Main Footer -->
+    <footer id="main-footer"></footer>
+
+    <!-- Toast Notification -->
+    <div class="listing-toast" id="listing-toast">
+      <span id="listing-toast-msg">Added to cart!</span>
+    </div>
+  </body>
+</html>
