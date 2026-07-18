@@ -121,3 +121,11 @@ export function initMobileMenu() {
     });
   }
 }
+
+
+// Returns a specific URL parameter (such as a search term or category)
+export function getParam(param) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(param);
+}
