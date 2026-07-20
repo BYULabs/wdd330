@@ -131,6 +131,77 @@ nav a:hover {
   color: white;
 }
 
+/* ─── SEARCH BAR ─── */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+}
+
+#search-form {
+  display: flex;
+  align-items: center;
+  background-color: var(--cream);
+  border: 1.5px solid var(--light-grey);
+  border-radius: 50px;
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+#search-form:focus-within {
+  border-color: var(--secondary-color);
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.15);
+}
+
+#search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--dark-grey);
+  width: 100%;
+}
+
+#search-input::placeholder {
+  color: var(--mid-grey);
+}
+
+#search-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+}
+
+#search-button:hover {
+  background-color: var(--light-grey);
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    max-width: 200px;
+    margin-right: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    display: none;
+  }
+}
+
 /* Hamburger Icon Styling */
 .menu-toggle {
   display: none;
