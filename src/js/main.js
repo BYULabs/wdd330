@@ -60,3 +60,42 @@ wrappers.forEach((wrapper) => {
     });
   }
 });
+
+// modal This script uses localStorage to check if the user is a first-time visitor before triggering the modal display
+
+function initGiveawayModal() {
+  const modal = document.getElementById('giveaway-modal');
+  const closeBtn = document.getElementById('close-modal');
+  const dismissBtn = document.getElementById('dismiss-modal');
+
+  const hasVisited = localStorage.getItem('giveawayModalSeen');
+
+  if (!hasVisited && modal) {
+    setTimeout(() => {
+      modal.classList.remove('hidden');
+    }, 1000);
+  }
+
+  function closeModal() {
+    if (modal) {
+      modal.classList.add('hidden');
+      localStorage.setItem('giveawayModalSeen', 'true');
+    }
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (dismissBtn) dismissBtn.addEventListener('click', closeModal);
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+}
+
+// this run the modal initialization function when the page loads.
+initGiveawayModal();
