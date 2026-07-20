@@ -5,7 +5,6 @@ import { loadHeaderFooter, getParam } from './utils.mjs';
 loadHeaderFooter();
 
 const category = getParam('category') || 'tents';
-const searchTerm = getParam('search');
 const listElement = document.querySelector('#product-grid');
 const dataSource = new ProductData();
 
@@ -16,39 +15,10 @@ const productList = new ProductList(
   productListCardTemplate,
 );
 
-// Main initialization logic handling either a search query or a category view
-async function initializePage() {
-  if (searchTerm) {
-    // Fetch products from a base category to simulate global searching
-    const allProducts = await dataSource.getData('tents');
-    
-    // Filter out products whose names include the search term
-    const filtered = allProducts.filter(product => 
-      product.NameWithoutBrand.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    // Feed the internal array states of the ProductList instance so filters still work
-    productList.products = allProducts;
-    productList.filteredProducts = filtered;
-
-    // Update the dynamic page main title to reflect search results
-    const heroTitle = document.getElementById('hero-title');
-    if (heroTitle) heroTitle.textContent = `Results for: "${searchTerm}"`;
-
-    // Render the filtered listing and update counts/sidebar elements
-    productList.renderList(filtered);
-    productList.updateCategoryDetails();
-    productList.buildBrandFilters();
-    
-    // Bind all sidebar filter and sort event listeners
-    setupEventListeners();
-  } else {
-    // Initialize application and bind UI controls once done
-    productList.init().then(() => {
-      setupEventListeners();
-    });
-  }
-}
+// Initialize application and bind UI controls once done
+productList.init().then(() => {
+  setupEventListeners();
+});
 
 function setupEventListeners() {
   // ─── 1. Sort Selection Change ───
