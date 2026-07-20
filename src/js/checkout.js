@@ -1,31 +1,29 @@
 import { loadHeaderFooter } from './utils.mjs';
 import CheckoutProcess from './CheckoutProcess.mjs';
+import ExternalServices from './ExternalServices.mjs';
 
-// Load shared header/footer layout dynamically
 loadHeaderFooter();
 
-// Instantiate CheckoutProcess targeting cart key and summary container
-const myCheckout = new CheckoutProcess('so-cart', '#order-summary');
+const services = new ExternalServices();
+const myCheckout = new CheckoutProcess('so-cart', '#order-summary', services);
 myCheckout.init();
 
-// Listen for zip code input changes to trigger tax and shipping calculations
-const zipInput = document.getElementById('zip');
-
-if (zipInput) {
-  zipInput.addEventListener('blur', () => {
-    if (zipInput.value.trim() !== '') {
-      myCheckout.calculateOrderTotals();
-    }
-  });
-}
-
-// Handle Form Submission
 const form = document.getElementById('checkout-form');
+
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     if (form.checkValidity()) {
-      alert('Order submitted successfully!');
+      try {
+        const res = await myCheckout.checkout(form);
+        console.log('Server response:', res);
+        alert(`Order placed successfully! Order ID: ${res.orderId || 'Confirmed'}`);
+        window.location.href = '../index.html';
+      } catch (err) {
+        console.error('Checkout failed:', err);
+        alert('There was an issue processing your order. Please try again.');
+      }
     }
   });
 }
