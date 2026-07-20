@@ -2559,6 +2559,64 @@ nav a:hover {
   }
 }
 
+/* ─── CHECKOUT FORM STYLES ─── */
+.checkout-form fieldset {
+  border: 1px solid var(--light-grey);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  background: white;
+}
+
+.checkout-form legend {
+  font-weight: 700;
+  color: var(--forest-dark);
+  padding: 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--dark-grey);
+}
+
+.form-group input {
+  padding: 0.65rem 0.8rem;
+  border: 1.5px solid var(--light-grey);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+  border-color: var(--secondary-color);
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
 /* ─── FOOTER ─── */
 footer {
   background: var(--dark-grey);
