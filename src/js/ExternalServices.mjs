@@ -8,7 +8,7 @@ function convertToJson(res) {
   }
 }
 
-export default class ProductData {
+export default class ExternalServices {
   // 1. Remove category and path from the constructor to make it more flexible
   constructor() {}
 
