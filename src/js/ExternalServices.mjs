@@ -8,20 +8,29 @@ function convertToJson(res) {
   }
 }
 
-export default class ProductData {
-  // 1. Remove category and path from the constructor to make it more flexible
+export default class ExternalServices {
   constructor() {}
 
-  // 2. Fetch directly from the external API using async/await
   async getData(category) {
     const response = await fetch(`${baseURL}products/search/${category}`);
     const data = await convertToJson(response);
-    return data.Result; // The API returns the array wrapped in a Result property
+    return data.Result;
   }
 
-  // 3. Keep findProductById compatible by ensuring it requests a category context
   async findProductById(id, category) {
     const products = await this.getData(category);
     return products.find((item) => item.Id === id);
+  }
+
+  // Submit the checkout order payload to the backend via POST
+  async checkout(payload) {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+    return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
   }
 }
