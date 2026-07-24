@@ -95,15 +95,19 @@ export default class CheckoutProcess {
     orderObject.tax = this.tax.toFixed(2);
     orderObject.items = packageItems(this.list);
 
+    // Code that can break goes inside the try block
     try {
       const response = await this.services.checkout(orderObject);
-      if (response) {
-        setLocalStorage(this.key, []);
-        updateCartCount();
-        return response;
-      }
+
+      // On success: clear local storage, update cart UI badge, and return response
+      setLocalStorage(this.key, []);
+      updateCartCount();
+      return response;
     } catch (err) {
-      console.error('Checkout error:', err);
+      // Handles server errors or network failures
+      console.error('Checkout error details:', err);
+      
+      // Re-throw or handle err (err.message now contains the server's detailed error response)
       throw err;
     }
   }
