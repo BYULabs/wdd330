@@ -2803,7 +2803,9 @@ footer {
   z-index: 1000;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 
 .modal-overlay.hidden {
@@ -2858,4 +2860,42 @@ footer {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+
+/* ─── ALERT BANNER STYLES ─── */
+.alert-list {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.alert-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fca311; /* Alert banner orange */
+  color: #111111;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #e08b00;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.alert-item p {
+  margin: 0;
+}
+
+.alert-item span {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  padding-left: 1rem;
+  user-select: none;
+  transition: opacity 0.2s ease;
+}
+
+.alert-item span:hover {
+  opacity: 0.7;
 }
