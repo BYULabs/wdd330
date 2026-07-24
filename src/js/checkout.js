@@ -1,4 +1,4 @@
-import { loadHeaderFooter } from './utils.mjs';
+import { loadHeaderFooter, alertMessage } from './utils.mjs';
 import CheckoutProcess from './CheckoutProcess.mjs';
 import ExternalServices from './ExternalServices.mjs';
 
@@ -20,19 +20,23 @@ if (form) {
       try {
         const res = await myCheckout.checkout(form);
         console.log('Order placed successfully:', res);
-
-        // Redirect to success page
         window.location.href = './success.html';
       } catch (err) {
         console.error('Checkout failed:', err);
 
+        // Clear existing alerts before displaying new ones
+        const existingAlerts = document.querySelector('.alert-list');
+        if (existingAlerts) {
+          existingAlerts.remove();
+        }
+
+        // Pass server validation errors (or generic string error) to alertMessage
         if (err.name === 'servicesError' && typeof err.message === 'object') {
-          const errorDetails = Object.values(err.message).join('\n');
-          alert(`Checkout failed:\n${errorDetails}`);
+          alertMessage(err.message, true);
         } else if (typeof err.message === 'string') {
-          alert(`Checkout failed: ${err.message}`);
+          alertMessage(err.message, true);
         } else {
-          alert('There was an issue processing your order. Please check your information and try again.');
+          alertMessage('There was an issue processing your order. Please try again.', true);
         }
       }
     }
