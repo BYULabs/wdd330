@@ -91,20 +91,28 @@ export async function loadHeaderFooter() {
   }
 }
 
-// Calculates total items in the cart and updates the header badge number
+// Calculates total items in the cart, updates the badge, and triggers animation
 export function updateCartCount() {
   const cartItems = getLocalStorage('so-cart');
+  const cartBadge = document.querySelector('.cart-badge');
+  
+  if (cartBadge) {
+    const totalCount = Array.isArray(cartItems) 
+      ? cartItems.reduce((sum, item) => sum + (item.Quantity || 1), 0) 
+      : 0;
+      
+    cartBadge.textContent = totalCount;
+  }
 
-  if (cartItems && Array.isArray(cartItems)) {
-    const count = cartItems.reduce(
-      (total, item) => total + (item.Quantity || 1),
-      0,
-    );
-    const badge = document.querySelector('.cart-badge');
-    if (badge) badge.textContent = count;
-  } else {
-    const badge = document.querySelector('.cart-badge');
-    if (badge) badge.textContent = 0;
+  // Trigger the bounce animation on the cart container
+  const cartContainer = document.querySelector('.cart');
+  if (cartContainer) {
+    cartContainer.classList.add('animate');
+    
+    // Remove the class after the animation completes so it can re-trigger next time
+    setTimeout(() => {
+      cartContainer.classList.remove('animate');
+    }, 400); // Must match the 0.4s CSS duration
   }
 }
 
