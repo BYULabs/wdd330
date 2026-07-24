@@ -14,22 +14,19 @@ if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Trigger standard browser validation popups if invalid
     form.reportValidity();
 
     if (form.checkValidity()) {
       try {
         const res = await myCheckout.checkout(form);
-        console.log('Server response:', res);
-        
-        alert(`Order placed successfully! Order ID: ${res.orderId || 'Confirmed'}`);
-        window.location.href = '../index.html';
+        console.log('Order placed successfully:', res);
+
+        // Redirect to success page
+        window.location.href = './success.html';
       } catch (err) {
         console.error('Checkout failed:', err);
 
-        // Extract detailed error messages from the custom error object thrown by convertToJson
         if (err.name === 'servicesError' && typeof err.message === 'object') {
-          // Convert error object properties into a readable string list
           const errorDetails = Object.values(err.message).join('\n');
           alert(`Checkout failed:\n${errorDetails}`);
         } else if (typeof err.message === 'string') {
