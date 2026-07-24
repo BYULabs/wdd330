@@ -14,15 +14,29 @@ if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // Trigger standard browser validation popups if invalid
+    form.reportValidity();
+
     if (form.checkValidity()) {
       try {
         const res = await myCheckout.checkout(form);
         console.log('Server response:', res);
+        
         alert(`Order placed successfully! Order ID: ${res.orderId || 'Confirmed'}`);
         window.location.href = '../index.html';
       } catch (err) {
         console.error('Checkout failed:', err);
-        alert('There was an issue processing your order. Please try again.');
+
+        // Extract detailed error messages from the custom error object thrown by convertToJson
+        if (err.name === 'servicesError' && typeof err.message === 'object') {
+          // Convert error object properties into a readable string list
+          const errorDetails = Object.values(err.message).join('\n');
+          alert(`Checkout failed:\n${errorDetails}`);
+        } else if (typeof err.message === 'string') {
+          alert(`Checkout failed: ${err.message}`);
+        } else {
+          alert('There was an issue processing your order. Please check your information and try again.');
+        }
       }
     }
   });
