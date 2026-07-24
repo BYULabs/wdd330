@@ -36,7 +36,10 @@ if (form) {
         } else if (typeof err.message === 'string') {
           alertMessage(err.message, true);
         } else {
-          alertMessage('There was an issue processing your order. Please try again.', true);
+          alertMessage(
+            'There was an issue processing your order. Please try again.',
+            true,
+          );
         }
       }
     }

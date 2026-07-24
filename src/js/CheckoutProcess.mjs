@@ -42,12 +42,13 @@ export default class CheckoutProcess {
 
   calculateItemSummary() {
     const subtotalElement = document.querySelector(
-      `${this.outputSelector} #summary-subtotal`
+      `${this.outputSelector} #summary-subtotal`,
     );
 
     this.itemTotal = this.list.reduce(
-      (sum, item) => sum + (parseFloat(item.FinalPrice) || 0) * (item.Quantity || 1),
-      0
+      (sum, item) =>
+        sum + (parseFloat(item.FinalPrice) || 0) * (item.Quantity || 1),
+      0,
     );
 
     if (subtotalElement) {
@@ -58,7 +59,7 @@ export default class CheckoutProcess {
   calculateOrderTotals() {
     const totalItems = this.list.reduce(
       (sum, item) => sum + (item.Quantity || 1),
-      0
+      0,
     );
 
     if (totalItems > 0) {
@@ -75,9 +76,13 @@ export default class CheckoutProcess {
   }
 
   displayOrderTotals() {
-    const shippingEl = document.querySelector(`${this.outputSelector} #summary-shipping`);
+    const shippingEl = document.querySelector(
+      `${this.outputSelector} #summary-shipping`,
+    );
     const taxEl = document.querySelector(`${this.outputSelector} #summary-tax`);
-    const totalEl = document.querySelector(`${this.outputSelector} #summary-total`);
+    const totalEl = document.querySelector(
+      `${this.outputSelector} #summary-total`,
+    );
 
     if (shippingEl) shippingEl.innerText = `$${this.shipping.toFixed(2)}`;
     if (taxEl) taxEl.innerText = `$${this.tax.toFixed(2)}`;
@@ -106,7 +111,7 @@ export default class CheckoutProcess {
     } catch (err) {
       // Handles server errors or network failures
       console.error('Checkout error details:', err);
-      
+
       // Re-throw or handle err (err.message now contains the server's detailed error response)
       throw err;
     }

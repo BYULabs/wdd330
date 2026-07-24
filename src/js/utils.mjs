@@ -130,7 +130,7 @@ export function alertMessage(message, scroll = true) {
   if (!alertList) {
     alertList = document.createElement('section');
     alertList.className = 'alert-list';
-    
+
     // Set up click listener to remove alerts when 'X' is clicked
     alertList.addEventListener('click', (e) => {
       if (e.target.tagName === 'SPAN' && e.target.innerText === 'X') {
