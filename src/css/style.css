@@ -2865,37 +2865,47 @@ footer {
 /* ─── ALERT BANNER STYLES ─── */
 .alert-list {
   width: 100%;
-  margin-bottom: 1.5rem;
+  max-width: 1200px;
+  margin: 1rem auto 1.5rem auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .alert-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fca311; /* Alert banner orange */
+  /* Default fallback colors if not provided in JSON */
+  background-color: #fca311;
   color: #111111;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
-  border: 1px solid #e08b00;
-  border-radius: var(--radius-sm);
+
+  padding: 0.85rem 1.25rem;
+  margin-bottom: 0.75rem;
+  border-radius: 6px;
   font-weight: 600;
   font-size: 0.95rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .alert-item p {
   margin: 0;
+  line-height: 1.4;
 }
 
 .alert-item span {
   cursor: pointer;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.25rem;
   padding-left: 1rem;
+  line-height: 1;
   user-select: none;
+  opacity: 0.8;
   transition: opacity 0.2s ease;
 }
 
 .alert-item span:hover {
-  opacity: 0.7;
+  opacity: 1;
 }

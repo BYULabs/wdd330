@@ -10,7 +10,6 @@ export default class Alert {
 
       const alerts = await response.json();
 
-      // If there are alerts in the JSON, render them on the page
       if (alerts && alerts.length > 0) {
         this.renderAlerts(alerts);
       }
@@ -20,21 +19,33 @@ export default class Alert {
   }
 
   renderAlerts(alerts) {
-    // 1. Create the <section class="alert-list"> tag
     const alertSection = document.createElement('section');
     alertSection.classList.add('alert-list');
 
-    // 2. Creates a <p> for each alert and applies the colors
     alerts.forEach((alert) => {
+      // 1. Create container for the alert item
+      const alertDiv = document.createElement('div');
+      alertDiv.classList.add('alert-item');
+      
+      // Override background and color dynamically if specified in JSON
+      if (alert.background) alertDiv.style.backgroundColor = alert.background;
+      if (alert.color) alertDiv.style.color = alert.color;
+
+      // 2. Create message text
       const alertParagraph = document.createElement('p');
       alertParagraph.textContent = alert.message;
-      alertParagraph.style.backgroundColor = alert.background;
-      alertParagraph.style.color = alert.color;
-      
-      alertSection.appendChild(alertParagraph);
+
+      // 3. Create close button (X)
+      const closeBtn = document.createElement('span');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.addEventListener('click', () => alertDiv.remove());
+
+      // 4. Assemble element
+      alertDiv.appendChild(alertParagraph);
+      alertDiv.appendChild(closeBtn);
+      alertSection.appendChild(alertDiv);
     });
 
-    // 3. Prepende a section no elemento <main> do index page
     const mainElement = document.querySelector('main');
     if (mainElement) {
       mainElement.prepend(alertSection);
