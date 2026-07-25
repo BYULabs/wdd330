@@ -10,7 +10,7 @@ export default class Alert {
 
       const alerts = await response.json();
 
-      // Se houver alertas no JSON, renderiza na página
+      // If there are alerts in the JSON, render them on the page
       if (alerts && alerts.length > 0) {
         this.renderAlerts(alerts);
       }
@@ -20,11 +20,11 @@ export default class Alert {
   }
 
   renderAlerts(alerts) {
-    // 1. Cria a tag <section class="alert-list">
+    // 1. Create the <section class="alert-list"> tag
     const alertSection = document.createElement('section');
     alertSection.classList.add('alert-list');
 
-    // 2. Cria um <p> para cada alerta e aplica as cores
+    // 2. Creates a <p> for each alert and applies the colors
     alerts.forEach((alert) => {
       const alertParagraph = document.createElement('p');
       alertParagraph.textContent = alert.message;

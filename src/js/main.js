@@ -2,7 +2,7 @@ import ProductData from './ExternalServices.mjs';
 import ProductList from './ProductList.mjs';
 import { loadHeaderFooter } from './utils.mjs';
 import Alert from './alert.mjs';
-// Inicializa os alertas informativos na home page
+// Initializes informational alerts on the home page
 const alert = new Alert();
 alert.init();
 
