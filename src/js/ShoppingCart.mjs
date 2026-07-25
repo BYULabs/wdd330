@@ -1,8 +1,4 @@
-import {
-  getLocalStorage,
-  setLocalStorage,
-  updateCartCount,
-} from './utils.mjs';
+import { getLocalStorage, setLocalStorage, updateCartCount } from './utils.mjs';
 
 const FREE_SHIPPING_THRESHOLD = 75;
 const SHIPPING_COST = 9.99;
@@ -46,7 +42,7 @@ export default class ShoppingCart {
     // Update Header Badge and Total Quantity
     const totalQty = cartItems.reduce(
       (sum, item) => sum + (item.Quantity || 1),
-      0
+      0,
     );
     if (itemCountEl) {
       itemCountEl.textContent = `${totalQty} item${totalQty !== 1 ? 's' : ''} in your cart`;
@@ -123,7 +119,7 @@ export default class ShoppingCart {
   calculateCartTotal(cartItems) {
     const subtotal = cartItems.reduce(
       (sum, item) => sum + item.FinalPrice * (item.Quantity || 1),
-      0
+      0,
     );
 
     const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;

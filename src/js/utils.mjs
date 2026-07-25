@@ -121,3 +121,46 @@ export function initMobileMenu() {
     });
   }
 }
+
+// ─── 5. ALERT MESSAGES ───
+
+export function alertMessage(message, scroll = true) {
+  // Create container element or select existing one
+  let alertList = document.querySelector('.alert-list');
+  if (!alertList) {
+    alertList = document.createElement('section');
+    alertList.className = 'alert-list';
+
+    // Set up click listener to remove alerts when 'X' is clicked
+    alertList.addEventListener('click', (e) => {
+      if (e.target.tagName === 'SPAN' && e.target.innerText === 'X') {
+        e.target.parentElement.remove();
+      }
+    });
+
+    const main = document.querySelector('main');
+    if (main) {
+      main.prepend(alertList);
+    }
+  }
+
+  // Handle single message string or object/array of messages
+  const messages = Array.isArray(message)
+    ? message
+    : typeof message === 'object' && message !== null
+      ? Object.values(message)
+      : [message];
+
+  // Append each alert element
+  messages.forEach((msg) => {
+    const alertItem = document.createElement('div');
+    alertItem.className = 'alert-item';
+    alertItem.innerHTML = `<p>${msg}</p><span>X</span>`;
+    alertList.appendChild(alertItem);
+  });
+
+  // Scroll back to top if requested
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+}
