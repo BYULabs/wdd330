@@ -1,7 +1,7 @@
 import ProductData from './ExternalServices.mjs';
 import ProductList from './ProductList.mjs';
 import { loadHeaderFooter } from './utils.mjs';
-import Alert from './alert.mjs';
+import Alert from './alert.js';
 // Initializes informational alerts on the home page
 const alert = new Alert();
 alert.init();
