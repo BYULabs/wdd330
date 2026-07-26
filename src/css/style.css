@@ -225,6 +225,31 @@ nav a:hover {
   justify-content: center;
 }
 
+/* Animation applied to the entire cart icon container */
+.cart.animate {
+  animation: bounce 0.6s ease-in-out;
+}
+
+/* Optional scale pop animation for the badge number */
+.cart-badge.bump {
+  animation: pop 0.3s ease-out;
+}
+
+@keyframes bounce {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.2) rotate(-10deg); }
+  40% { transform: scale(1.2) rotate(10deg); }
+  60% { transform: scale(1.1) rotate(-5deg); }
+  80% { transform: scale(1.05) rotate(0deg); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
 /* ─── HERO ─── */
 .hero-section {
   position: relative;
